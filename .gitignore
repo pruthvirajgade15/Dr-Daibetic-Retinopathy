@@ -1,0 +1,89 @@
+# Python & Bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Testing & Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+
+# Node.js & Next.js Frontend
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/.turbo/
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+frontend/.pnpm-debug.log*
+
+# Deep Learning Model Weights & Large Checkpoints
+# (Uncomment if storing large checkpoints externally)
+# weights/*.pth
+# weights/*.onnx
+# weights/*.pt
+# weights/*.bin
+!weights/.gitkeep
+!backend/models/efficientnet_dr.pth
+
+# Dataset Large Binaries & ML Training Archives
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+data/splits/*
+!data/splits/.gitkeep
+ml-training/data/raw/*
+!ml-training/data/raw/.gitkeep
+ml-training/data/processed/*
+!ml-training/data/processed/.gitkeep
+*.zip
+*.tar.gz
+
+# SQLite Databases & Local Storage
+*.db
+*.sqlite3
+backend/app/database/*.db
+
+# Generated Clinical Screening Reports
+reports/*
+!reports/.gitkeep
+backend/reports/*
+!backend/reports/.gitkeep
+
+# MATLAB temporary files
+*.asv
+*.m~
+slprj/
+*.mex*
+
+# OS & IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
