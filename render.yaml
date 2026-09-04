@@ -1,0 +1,22 @@
+services:
+  # FastAPI Deep Learning Backend Service on Render
+  - type: web
+    name: dr-screening-backend
+    env: python
+    region: oregon
+    plan: free
+    rootDir: backend
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "python -m uvicorn app.main:app --host 0.0.0.0 --port $PORT"
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: DEBUG
+        value: "false"
+      - key: CORS_ORIGINS
+        value: "https://your-frontend-domain.vercel.app,http://localhost:3000"
+      - key: DATABASE_URL
+        value: "sqlite:///./app/database/screening.db"
+      - key: PYTHON_VERSION
+        value: "3.10.11"
+    autoDeploy: true
