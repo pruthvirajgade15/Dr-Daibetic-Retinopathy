@@ -1,0 +1,142 @@
+# 🚀 Production Deployment Guide: Render & Vercel
+
+This guide walks you through deploying the **DR-Screening-AI** platform to production using **Render** (for the FastAPI + PyTorch Backend) and **Vercel** (for the Next.js 14 Frontend).
+
+---
+
+## 🏗️ Architecture Overview
+
+```
+ ┌───────────────────────────┐         HTTPS / REST API         ┌───────────────────────────┐
+ │   Vercel (Frontend)       │ ───────────────────────────────> │   Render (Backend API)    │
+ │   Next.js 14 App Router   │ <─────────────────────────────── │   FastAPI + PyTorch DL    │
+ │   https://*.vercel.app    │        JSON + XAI Reports        │   https://*.onrender.com  │
+ └───────────────────────────┘                                  └───────────────────────────┘
+```
+
+---
+
+## Part 1: Deploying the Backend on Render
+
+### Step 1: Push your Code to GitHub
+Ensure your repository is pushed to GitHub:
+```powershell
+git add .
+git commit -m "feat: ready for render & vercel deployment"
+git push origin main
+```
+
+---
+
+### Step 2: Create a New Web Service on Render
+1. Log in to [Render Dashboard](https://dashboard.render.com/).
+2. Click **"New +"** in the top right and select **"Web Service"**.
+3. Connect your GitHub repository (`Dr-Daibetic-Retinopathy`).
+
+---
+
+### Step 3: Configure Web Service Settings
+Fill in the deployment settings as follows:
+
+| Field | Setting |
+| :--- | :--- |
+| **Name** | `dr-screening-backend` |
+| **Region** | Select closest region (e.g. `Frankfurt`, `Oregon`, `Singapore`) |
+| **Branch** | `main` |
+| **Root Directory** | `backend` |
+| **Runtime** | `Python 3` |
+| **Build Command** | `pip install -r requirements.txt` |
+| **Start Command** | `uvicorn app.main:app --host 0.0.0.0 --port $PORT` |
+| **Instance Type** | Free or Starter ($7/mo recommended for faster PyTorch CPU inference) |
+
+---
+
+### Step 4: Add Environment Variables
+Under the **Environment Variables** section on Render, add:
+
+| Key | Value | Notes |
+| :--- | :--- | :--- |
+| `PYTHON_VERSION` | `3.10.11` | Ensures consistent Python version |
+| `ENVIRONMENT` | `production` | Production mode |
+| `PORT` | `10000` | Render injects this automatically |
+
+---
+
+### Step 5: Configure Health Check Path
+Under **Advanced**:
+- **Health Check Path:** `/api/health`
+
+Click **"Create Web Service"**. Render will install dependencies, load the EfficientNet weights, and start FastAPI.
+
+Once deployed, copy your backend URL:  
+👉 `https://dr-screening-backend.onrender.com`
+
+---
+
+## Part 2: Deploying the Frontend on Vercel
+
+### Step 1: Import Project into Vercel
+1. Log in to [Vercel Dashboard](https://vercel.com/).
+2. Click **"Add New..."** -> **"Project"**.
+3. Import your GitHub repository (`Dr-Daibetic-Retinopathy`).
+
+---
+
+### Step 2: Configure Project Settings
+In the Vercel project configuration screen:
+
+1. **Framework Preset:** `Next.js`
+2. **Root Directory:** Click **Edit** and select **`frontend`** (🚨 **Critical Step**).
+3. **Build Command:** `npm run build` (Default)
+4. **Output Directory:** `.next` (Default)
+5. **Install Command:** `npm install` (Default)
+
+---
+
+### Step 3: Configure Environment Variables
+Under **Environment Variables**, add:
+
+| Key | Value | Example |
+| :--- | :--- | :--- |
+| `NEXT_PUBLIC_BACKEND_URL` | Your Render Backend URL | `https://dr-screening-backend.onrender.com` |
+
+---
+
+### Step 4: Deploy
+Click **"Deploy"**. Vercel will:
+- Install Next.js dependencies.
+- Compile and optimize production bundles.
+- Assign your production URL: 👉 `https://dr-screening-frontend.vercel.app`
+
+---
+
+## Part 3: Verification & End-to-End Testing
+
+1. Open your Vercel URL in your browser: `https://dr-screening-frontend.vercel.app`.
+2. Navigate to `/screening`.
+3. Upload a retinal fundus image (e.g., from `ml-training/data/processed/` or any test sample).
+4. Click **"Run AI Retinal Screening"**.
+5. Verify that:
+   - **Quality Score** calculates clarity and illumination.
+   - **5-Grade ICDR Prediction** displays stage & confidence.
+   - **Grad-CAM Viewer** overlays saliency heatmaps with interactive opacity slider.
+   - **Clinical Report** button allows downloading/printing the A4 clinical sheet.
+
+---
+
+## 🔧 Troubleshooting & Tips
+
+### Cold Starts on Render Free Tier
+Render free instances spin down after 15 minutes of inactivity. The first API request may take ~30-45 seconds to wake up.
+- To keep it warm, use a free uptime monitor (like [UptimeRobot](https://uptimerobot.com/)) pinging `https://your-backend.onrender.com/api/health` every 10 minutes.
+
+### CORS Configuration
+The backend is pre-configured with wildcard and domain origins in [`backend/app/core/config.py`](file:///d:/GitHub/Dr-Daibetic-Retinopathy/backend/app/core/config.py):
+```python
+ALLOWED_ORIGINS: List[str] = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "*"
+]
+```
+If you want to restrict CORS to only your Vercel domain, update `ALLOWED_ORIGINS` to include `https://your-app.vercel.app`.
