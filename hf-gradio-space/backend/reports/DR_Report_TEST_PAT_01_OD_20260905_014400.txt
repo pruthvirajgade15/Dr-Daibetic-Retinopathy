@@ -1,4 +1,0 @@
-DIABETIC RETINOPATHY SCREENING REPORT
-Screening ID: ad476840-f106-4610-a5d9-bcecb696775a | Patient: TEST_PAT_01 (OD)
-Diagnosis: Proliferative DR (Confidence: 25.5%)
-Action: Immediate Surgical/Laser Evaluation (24-48 hours)
