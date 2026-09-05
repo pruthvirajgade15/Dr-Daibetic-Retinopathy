@@ -1,6 +1,8 @@
-# 🚀 Production Deployment Guide: Render & Vercel
+# 🚀 Production Deployment Guide: Hugging Face Spaces & Vercel
 
-This guide walks you through deploying the **DR-Screening-AI** platform to production using **Render** (for the FastAPI + PyTorch Backend) and **Vercel** (for the Next.js 14 Frontend).
+This guide walks you through deploying the **DR-Screening-AI** platform to production using:
+1. **Hugging Face Spaces (or Render)** for the FastAPI + PyTorch Backend API.
+2. **Vercel** for the Next.js 14 Frontend.
 
 ---
 
@@ -8,15 +10,66 @@ This guide walks you through deploying the **DR-Screening-AI** platform to produ
 
 ```
  ┌───────────────────────────┐         HTTPS / REST API         ┌───────────────────────────┐
- │   Vercel (Frontend)       │ ───────────────────────────────> │   Render (Backend API)    │
+ │   Vercel (Frontend)       │ ───────────────────────────────> │   Hugging Face Spaces     │
  │   Next.js 14 App Router   │ <─────────────────────────────── │   FastAPI + PyTorch DL    │
- │   https://*.vercel.app    │        JSON + XAI Reports        │   https://*.onrender.com  │
+ │   https://*.vercel.app    │        JSON + XAI Reports        │   https://*.hf.space      │
  └───────────────────────────┘                                  └───────────────────────────┘
 ```
 
 ---
 
-## Part 1: Deploying the Backend on Render
+## Part 1: Deploy Backend on Hugging Face Spaces (Free Cloud GPU/CPU)
+
+Hugging Face Spaces provides free hosting for machine learning models and FastAPI backends via Docker.
+
+### Step 1: Create a New Space on Hugging Face
+1. Log in to [Hugging Face](https://huggingface.co/) (or create an account).
+2. Click on your profile icon (top right) $\rightarrow$ **"New Space"**.
+3. Configure the Space settings:
+   - **Space Name:** `dr-screening-backend` (or your choice).
+   - **License:** `MIT`.
+   - **Select the Space SDK:** Choose **`Docker`** $\rightarrow$ **`Blank`**.
+   - **Space Hardware:** `CPU Basic` (Free) or `T4 small` (GPU).
+   - **Visibility:** `Public` (recommended so Vercel can access the API).
+4. Click **"Create Space"**.
+
+---
+
+### Step 2: Push Backend Code to Hugging Face Space
+
+You can push the `backend/` folder contents directly to your Hugging Face Space Git repository:
+
+```powershell
+# Clone your newly created Hugging Face Space repository
+git clone https://huggingface.co/spaces/<YOUR_HF_USERNAME>/dr-screening-backend hf-backend-space
+
+# Copy backend files into the cloned space directory
+Copy-Item -Path "backend\*" -Destination "hf-backend-space" -Recurse -Force
+
+# Navigate to the space directory
+cd hf-backend-space
+
+# Commit and push to Hugging Face
+git add .
+git commit -m "feat: deploy FastAPI PyTorch DR screening backend"
+git push
+cd ..
+```
+
+---
+
+### Step 3: Verify Hugging Face Space Endpoint
+
+1. Once the build finishes (takes ~1-2 minutes), Hugging Face will show **"Running"**.
+2. Hugging Face Spaces exposes your API directly at:
+   👉 **`https://<YOUR_HF_USERNAME>-dr-screening-backend.hf.space`**
+3. Verify the health check by visiting:
+   - `https://<YOUR_HF_USERNAME>-dr-screening-backend.hf.space/api/health`
+   - Interactive Swagger API docs: `https://<YOUR_HF_USERNAME>-dr-screening-backend.hf.space/docs`
+
+---
+
+## Part 2: Deploy Frontend on Vercel (Next.js 14)
 
 ### Step 1: Push your Code to GitHub
 Ensure your repository is pushed to GitHub:
