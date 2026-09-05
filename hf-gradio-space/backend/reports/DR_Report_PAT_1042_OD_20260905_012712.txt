@@ -1,0 +1,24 @@
+========================================================================
+     EXPLAINABLE AI DIABETIC RETINOPATHY SCREENING REPORT               
+========================================================================
+Date/Time:       2026-09-05 01:27:12
+Patient ID:      PAT_1042
+Eye Examined:    OD
+------------------------------------------------------------------------
+IMAGE QUALITY ASSESSMENT (IQA)
+Quality Grade:   Adequate (Score: 83.7/100)
+Sharpness:       100.0/100
+Brightness:      97.7/100
+Contrast:        37.0/100
+Field of View:   100.0/100
+------------------------------------------------------------------------
+DIAGNOSTIC SCREENING FINDINGS
+DR Grade:        Grade 1 (1_Mild_DR)
+Severity:        Mild Non-Proliferative Diabetic Retinopathy (Mild NPDR)
+AI Confidence:   82.0%
+Referral Status: NON-REFERABLE (Low Risk)
+Urgency Level:   Follow-up (6-12 mo)
+Recommendation:  Early microaneurysms detected. Repeat screening in 6 to 12 months with optimized diabetes management.
+========================================================================
+DISCLAIMER: This system is an AI-assisted screening tool and does not replace professional ophthalmic diagnosis.
+========================================================================

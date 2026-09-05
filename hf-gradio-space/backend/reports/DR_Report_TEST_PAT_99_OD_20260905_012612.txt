@@ -1,0 +1,24 @@
+========================================================================
+     EXPLAINABLE AI DIABETIC RETINOPATHY SCREENING REPORT               
+========================================================================
+Date/Time:       2026-09-05 01:26:12
+Patient ID:      TEST_PAT_99
+Eye Examined:    OD
+------------------------------------------------------------------------
+IMAGE QUALITY ASSESSMENT (IQA)
+Quality Grade:   Adequate (Score: 93.9/100)
+Sharpness:       100.0/100
+Brightness:      98.6/100
+Contrast:        77.0/100
+Field of View:   100.0/100
+------------------------------------------------------------------------
+DIAGNOSTIC SCREENING FINDINGS
+DR Grade:        Grade 2 (2_Moderate_DR)
+Severity:        Moderate Non-Proliferative Diabetic Retinopathy (Moderate NPDR)
+AI Confidence:   77.0%
+Referral Status: REFERABLE DIABETIC RETINOPATHY
+Urgency Level:   Referral (3-6 mo)
+Recommendation:  Referable Diabetic Retinopathy: Refer to an Ophthalmologist / Retina Specialist within 3 to 6 months for comprehensive dilated examination.
+========================================================================
+DISCLAIMER: This system is an AI-assisted screening tool and does not replace professional ophthalmic diagnosis.
+========================================================================

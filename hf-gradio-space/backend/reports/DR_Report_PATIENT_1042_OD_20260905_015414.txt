@@ -1,0 +1,4 @@
+DIABETIC RETINOPATHY SCREENING REPORT
+Screening ID: c9d39a24-925c-449d-bde2-a19b96945d01 | Patient: PATIENT_1042 (OD)
+Diagnosis: Mild NPDR (Confidence: 25.6%)
+Action: Semi-Annual Monitoring (6-9 months)

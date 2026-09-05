@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Explainable AI Clinical Report - PATIENT_1043</title>
+    <style>
+        @media print {
+            body { background: #ffffff !important; color: #000000 !important; padding: 0 !important; }
+            .card { border: none !important; box-shadow: none !important; background: #ffffff !important; color: #000000 !important; max-width: 100% !important; }
+            .no-print { display: none !important; }
+            .img-card { border: 1px solid #cccccc !important; background: #f8fafc !important; }
+            .disclaimer { background: #fef3c7 !important; color: #92400e !important; border-left: 4px solid #d97706 !important; }
+        }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: #090d16; color: #f8fafc; padding: 32px 16px; margin: 0; line-height: 1.5; }
+        .card { background: #131b2e; border-radius: 16px; padding: 32px; border: 1px solid #1e293b; max-width: 960px; margin: 0 auto; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+        .header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #1e293b; padding-bottom: 20px; margin-bottom: 24px; }
+        .badge { background: #f97316; color: #ffffff; padding: 6px 18px; border-radius: 9999px; font-weight: 800; font-size: 15px; letter-spacing: 0.5px; }
+        .badge-sub { background: #1e293b; color: #38bdf8; border: 1px solid #0284c7; padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; text-transform: uppercase; }
+        .section-title { font-size: 16px; font-weight: 700; color: #38bdf8; border-bottom: 1px solid #1e293b; padding-bottom: 8px; margin: 28px 0 16px 0; text-transform: uppercase; letter-spacing: 1px; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 16px 0; }
+        .info-box { background: #0b1120; border: 1px solid #1e293b; border-radius: 10px; padding: 16px; }
+        .info-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 13px; border-bottom: 1px solid #1e293b; }
+        .info-row:last-child { border-bottom: none; }
+        .img-card { background: #0b1120; border-radius: 10px; padding: 10px; text-align: center; border: 1px solid #1e293b; }
+        .img-card img { width: 100%; border-radius: 6px; aspect-ratio: 1/1; object-fit: cover; }
+        .img-label { font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; margin: 6px 0 0 0; }
+        table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        .disclaimer { background: #451a03; border-left: 4px solid #f59e0b; padding: 16px; border-radius: 8px; margin-top: 32px; font-size: 12px; color: #fde68a; }
+        .print-btn { background: #06b6d4; color: #020617; padding: 10px 20px; border-radius: 8px; font-weight: 700; cursor: pointer; border: none; font-size: 13px; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="no-print" style="text-align: right; margin-bottom: 16px;">
+            <button class="print-btn" onclick="window.print()">🖨️ Print / Save as PDF</button>
+        </div>
+
+        <div class="header">
+            <div>
+                <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
+                    <span class="badge-sub">Explainable AI (XAI)</span>
+                    <span class="badge-sub">Autonomous Screening</span>
+                </div>
+                <h1 style="margin:0; font-size:24px; font-weight:800; color:#ffffff;">Diabetic Retinopathy Clinical Saliency Report</h1>
+                <p style="margin:4px 0 0 0; color:#94a3b8; font-size:12px;">Screening Reference: 7d606773-5ecb-4964-9aad-cc9c51cad234 | Timestamp: 2026-09-05 02:04:18</p>
+            </div>
+            <div style="text-align:right;">
+                <div class="badge">Severe NPDR</div>
+                <div style="font-size:12px; color:#94a3b8; margin-top:6px;">Confidence: <b>60.0%</b></div>
+            </div>
+        </div>
+
+        <div class="grid-2">
+            <div class="info-box">
+                <div style="font-weight:700; color:#38bdf8; font-size:13px; margin-bottom:8px;">PATIENT & EXAM SPECIFICATION</div>
+                <div class="info-row"><span>Patient Identifier:</span><b>PATIENT_1043</b></div>
+                <div class="info-row"><span>Examined Eye:</span><b>OD</b></div>
+                <div class="info-row"><span>Referable DR:</span><b style="color:#ef4444;">Yes (Referral Required)</b></div>
+                <div class="info-row"><span>Clinical Urgency:</span><b>Urgent Retinal Specialist (2-4 weeks)</b></div>
+            </div>
+
+            <div class="info-box">
+                <div style="font-weight:700; color:#38bdf8; font-size:13px; margin-bottom:8px;">IMAGE QUALITY AUDIT</div>
+                <div class="info-row"><span>Overall Quality:</span><b>Gradable (Optimal for AI) (91.1/100)</b></div>
+                <div class="info-row"><span>Clarity / Sharpness:</span><b>100.0/100</b></div>
+                <div class="info-row"><span>Uniform Illumination:</span><b>78.7/100</b></div>
+                <div class="info-row"><span>Optic Disc Visibility:</span><b>Visible</b></div>
+            </div>
+        </div>
+
+        <div class="section-title">Multi-Modal Computer Vision Diagnostics</div>
+        <div class="grid-4">
+            <div class="img-card"><img src="DR_XAI_Report_PATIENT_1043_OD_20260905_020418_orig.png"><p class="img-label">1. Original Fundus</p></div>
+            <div class="img-card"><img src="DR_XAI_Report_PATIENT_1043_OD_20260905_020418_prep.png"><p class="img-label">2. Ben Graham CLAHE</p></div>
+            <div class="img-card"><img src="DR_XAI_Report_PATIENT_1043_OD_20260905_020418_grad.png"><p class="img-label">3. Grad-CAM Saliency</p></div>
+            <div class="img-card"><img src="DR_XAI_Report_PATIENT_1043_OD_20260905_020418_struct.png"><p class="img-label">4. Vessels & Landmarks</p></div>
+        </div>
+
+        <div class="section-title">Explainable AI (XAI) Saliency & Attention Analysis</div>
+        <div class="grid-2">
+            <div class="info-box">
+                <div style="font-weight:700; color:#38bdf8; font-size:13px; margin-bottom:8px;">ANATOMICAL QUADRANT ATTRIBUTION</div>
+                <table>
+                    <thead>
+                        <tr style="color:#94a3b8; text-align:left; font-size:11px; text-transform:uppercase;">
+                            <th style="padding:6px 12px;">Quadrant</th>
+                            <th style="padding:6px 12px; text-align:right;">Attention</th>
+                            <th style="padding:6px 12px; width:40%;">Visual Distribution</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td style='padding:8px 12px; border-bottom:1px solid #334155;'>Macula Fovea</td><td style='padding:8px 12px; border-bottom:1px solid #334155; font-weight:bold; text-align:right;'>32.6%</td><td style='padding:8px 12px; border-bottom:1px solid #334155;'><div style='background:#334155; border-radius:4px; overflow:hidden; height:8px;'><div style='background:#06b6d4; height:100%; width:65.2%;'></div></div></td></tr><tr><td style='padding:8px 12px; border-bottom:1px solid #334155;'>Superior Temporal</td><td style='padding:8px 12px; border-bottom:1px solid #334155; font-weight:bold; text-align:right;'>15.4%</td><td style='padding:8px 12px; border-bottom:1px solid #334155;'><div style='background:#334155; border-radius:4px; overflow:hidden; height:8px;'><div style='background:#06b6d4; height:100%; width:30.8%;'></div></div></td></tr><tr><td style='padding:8px 12px; border-bottom:1px solid #334155;'>Inferior Temporal</td><td style='padding:8px 12px; border-bottom:1px solid #334155; font-weight:bold; text-align:right;'>19.9%</td><td style='padding:8px 12px; border-bottom:1px solid #334155;'><div style='background:#334155; border-radius:4px; overflow:hidden; height:8px;'><div style='background:#06b6d4; height:100%; width:39.8%;'></div></div></td></tr><tr><td style='padding:8px 12px; border-bottom:1px solid #334155;'>Superior Nasal</td><td style='padding:8px 12px; border-bottom:1px solid #334155; font-weight:bold; text-align:right;'>18.2%</td><td style='padding:8px 12px; border-bottom:1px solid #334155;'><div style='background:#334155; border-radius:4px; overflow:hidden; height:8px;'><div style='background:#06b6d4; height:100%; width:36.4%;'></div></div></td></tr><tr><td style='padding:8px 12px; border-bottom:1px solid #334155;'>Inferior Nasal</td><td style='padding:8px 12px; border-bottom:1px solid #334155; font-weight:bold; text-align:right;'>13.9%</td><td style='padding:8px 12px; border-bottom:1px solid #334155;'><div style='background:#334155; border-radius:4px; overflow:hidden; height:8px;'><div style='background:#06b6d4; height:100%; width:27.8%;'></div></div></td></tr>
+                    </tbody>
+                </table>
+                <p style="font-size:12px; color:#94a3b8; margin-top:10px;">Primary Activation Focus: <b style="color:#38bdf8;">Macula Fovea</b></p>
+            </div>
+
+            <div class="info-box">
+                <div style="font-weight:700; color:#38bdf8; font-size:13px; margin-bottom:8px;">LESION SALIENCY AUDIT</div>
+                <table>
+                    <thead>
+                        <tr style="color:#94a3b8; text-align:left; font-size:11px; text-transform:uppercase;">
+                            <th style="padding:6px 12px;">Biomarker Signature</th>
+                            <th style="padding:6px 12px;">AI Detection Rationale</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td style='padding:8px 12px; border-bottom:1px solid #334155; font-weight:600;'>Microaneurysms</td><td style='padding:8px 12px; border-bottom:1px solid #334155; color:#f87171;'>Detected punctate focal points</td></tr><tr><td style='padding:8px 12px; border-bottom:1px solid #334155; font-weight:600;'>Hemorrhages</td><td style='padding:8px 12px; border-bottom:1px solid #334155; color:#f87171;'>Dot/blot retinal hemorrhages visible in periphery</td></tr><tr><td style='padding:8px 12px; border-bottom:1px solid #334155; font-weight:600;'>Hard Exudates</td><td style='padding:8px 12px; border-bottom:1px solid #334155; color:#94a3b8;'>Lipid deposits identified near vascular arcades</td></tr><tr><td style='padding:8px 12px; border-bottom:1px solid #334155; font-weight:600;'>Cotton Wool Spots</td><td style='padding:8px 12px; border-bottom:1px solid #334155; color:#f87171;'>Nerve fiber layer infarcts suspected</td></tr><tr><td style='padding:8px 12px; border-bottom:1px solid #334155; font-weight:600;'>Neovascularization</td><td style='padding:8px 12px; border-bottom:1px solid #334155; color:#94a3b8;'>Negative</td></tr>
+                    </tbody>
+                </table>
+                <p style="font-size:11px; color:#64748b; margin-top:10px;">Attribution Model: Gradient-weighted Class Activation Mapping (Grad-CAM) (EfficientNet-B0.features.top_conv)</p>
+            </div>
+        </div>
+
+        <div class="disclaimer">
+            <b>Clinical AI Screening Disclaimer:</b> This system is an AI-assisted screening tool and does not replace professional ophthalmic examination and clinical diagnosis.
+            <br>
+            <i>This algorithmic evaluation is provided as an ophthalmological decision support tool. It does not replace comprehensive dilated clinical examination by a licensed eye care specialist.</i>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,6 @@
+DIABETIC RETINOPATHY EXPLAINABLE AI (XAI) SCREENING REPORT
+Screening ID: 7d606773-5ecb-4964-9aad-cc9c51cad234 | Patient: PATIENT_1043 (OD)
+Diagnosis: Severe NPDR (Confidence: 60.0%)
+Dominant Attention Quadrant: Macula Fovea
+Referable DR: True
+Action: Urgent Retinal Specialist (2-4 weeks)
