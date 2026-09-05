@@ -62,19 +62,33 @@ def train_model(
     data_dir: str = "ml-training/data/processed",
     csv_path: str = "ml-training/data/metadata/sample_manifest.csv",
     epochs: int = 15,
-    batch_size: int = 8,
+    batch_size: int = 32,
     lr: float = 1e-4
 ):
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    print(f"[*] Training on device: {device}")
+    use_cuda = torch.cuda.is_available()
+    device = torch.device("cuda" if use_cuda else "cpu")
+    
+    if use_cuda:
+        gpu_name = torch.cuda.get_device_name(0)
+        vram_gb = torch.cuda.get_device_properties(0).total_memory / 1e9
+        print(f"[+] High-Performance GPU Detected: {gpu_name} ({vram_gb:.1f} GB VRAM)")
+        print(f"    Enabling CUDA Acceleration, Tensor Cores & Automatic Mixed Precision (AMP).")
+    else:
+        print(f"[*] Training on device: CPU")
     
     ds = RetinalDataset(data_dir, csv_path if os.path.exists(csv_path) else None)
     if len(ds) == 0:
         print(f"[!] No dataset samples found in {data_dir}. Run prepare_dataset.py first.")
         return
 
-    print(f"[*] Found {len(ds)} training images.")
-    loader = DataLoader(ds, batch_size=min(batch_size, len(ds)), shuffle=True)
+    print(f"[*] Found {len(ds)} training images across all 5 DR classes.")
+    loader = DataLoader(
+        ds,
+        batch_size=min(batch_size, len(ds)),
+        shuffle=True,
+        pin_memory=use_cuda,
+        num_workers=0
+    )
     
     model = models.efficientnet_b0(weights=models.EfficientNet_B0_Weights.DEFAULT)
     in_features = model.classifier[1].in_features
@@ -90,28 +104,45 @@ def train_model(
     )
     model.to(device)
 
-    optimizer = torch.optim.AdamW(model.parameters(), lr=lr)
+    optimizer = torch.optim.AdamW(model.parameters(), lr=lr, weight_decay=1e-2)
     criterion = nn.CrossEntropyLoss()
+    scaler = torch.cuda.amp.GradScaler(enabled=use_cuda)
 
     best_loss = float("inf")
     os.makedirs("ml-training/outputs/checkpoints", exist_ok=True)
     os.makedirs("backend/models", exist_ok=True)
 
-    print(f"[*] Starting PyTorch EfficientNet-B0 training for {epochs} epochs...")
+    print(f"[*] Starting PyTorch EfficientNet-B0 GPU training for {epochs} epochs (Batch Size: {batch_size})...")
     for epoch in range(1, epochs + 1):
         model.train()
         total_loss = 0.0
-        for imgs, labels in loader:
-            imgs, labels = imgs.to(device), labels.to(device)
-            optimizer.zero_grad()
-            outputs = model(imgs)
-            loss = criterion(outputs, labels)
-            loss.backward()
-            optimizer.step()
-            total_loss += loss.item()
+        correct = 0
+        total = 0
 
-        avg_loss = total_loss / len(loader)
-        print(f"Epoch [{epoch:02d}/{epochs:02d}] Loss: {avg_loss:.4f}")
+        for imgs, labels in loader:
+            imgs, labels = imgs.to(device, non_blocking=use_cuda), labels.to(device, non_blocking=use_cuda)
+            optimizer.zero_grad(set_to_none=True)
+            
+            with torch.cuda.amp.autocast(enabled=use_cuda):
+                outputs = model(imgs)
+                loss = criterion(outputs, labels)
+            
+            if use_cuda:
+                scaler.scale(loss).backward()
+                scaler.step(optimizer)
+                scaler.update()
+            else:
+                loss.backward()
+                optimizer.step()
+
+            total_loss += loss.item() * imgs.size(0)
+            preds = outputs.argmax(dim=1)
+            correct += (preds == labels).sum().item()
+            total += labels.size(0)
+
+        avg_loss = total_loss / total
+        acc = (correct / total) * 100.0
+        print(f"Epoch [{epoch:02d}/{epochs:02d}] Loss: {avg_loss:.4f} | Train Acc: {acc:.2f}%")
 
         if avg_loss < best_loss:
             best_loss = avg_loss
@@ -120,12 +151,13 @@ def train_model(
             torch.save({
                 "epoch": epoch,
                 "model_state_dict": model.state_dict(),
-                "loss": best_loss
+                "loss": best_loss,
+                "accuracy": acc
             }, ckpt_path)
             torch.save(model.state_dict(), backend_model_path)
             print(f"  [+] Saved best model -> {ckpt_path} & {backend_model_path}")
 
-    print(f"\n[+] Training Complete! Best Loss: {best_loss:.4f}")
+    print(f"\n[+] GPU Training Complete! Best Loss: {best_loss:.4f}")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Train Diabetic Retinopathy Model")
