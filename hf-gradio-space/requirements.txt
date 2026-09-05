@@ -1,0 +1,28 @@
+# Deep Learning & Computer Vision
+torch>=2.0.0
+torchvision>=0.15.0
+opencv-python>=4.8.0
+numpy>=1.24.0
+scipy>=1.10.0
+pillow>=10.0.0
+scikit-learn>=1.3.0
+pandas>=2.0.0
+pyyaml>=6.0
+tqdm>=4.65.0
+
+# Explainability & Metrics
+matplotlib>=3.7.0
+
+# Backend Web API
+fastapi>=0.109.0
+uvicorn[standard]>=0.27.0
+python-multipart>=0.0.9
+pydantic>=2.0.0
+
+# Web Apps & Demo UI
+gradio>=4.0.0
+
+# Testing & Linting
+pytest>=7.4.0
+httpx>=0.26.0
+requests>=2.31.0
